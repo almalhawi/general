@@ -1,0 +1,56 @@
+Procedure
+
+    To store all the source certificate files, create a directory that is accessible only to the root user.
+
+    # mkdir /root/cert
+    Create a private key with which to sign the Certificate Signing Request (CSR).
+
+
+    # openssl genrsa -out /root/cert/cert_key.pem 4096
+    Create the /root/cert/openssl.cnf configuration file for the Certificate Signing Request (CSR) and include the following content:
+
+cat << EOF > /root/certs/openssl.cnf
+    [ req ]
+    req_extensions = v3_req
+    distinguished_name = req_distinguished_name
+    x509_extensions = usr_cert
+    prompt = no
+
+    [ req_distinguished_name ] 
+    C  = Country Name (2 letter code)
+    ST = State or Province Name (full name)
+    L  = Locality Name (eg, city)
+    O  = Organization Name (eg, company)
+    OU = The division of your organization handling the certificate
+    CN = server.example.com 
+    
+    [ v3_req ]
+    basicConstraints = CA:FALSE
+    keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+    extendedKeyUsage = serverAuth, clientAuth, codeSigning, emailProtection
+    subjectAltName = @alt_names
+
+    [ usr_cert ]
+    basicConstraints=CA:FALSE
+    nsCertType = client, server, email
+    keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+    extendedKeyUsage = serverAuth, clientAuth, codeSigning, emailProtection
+    nsComment = "OpenSSL Generated Certificate"
+    subjectKeyIdentifier=hash
+    authorityKeyIdentifier=keyid,issuer
+
+    [ alt_names ]
+    DNS.1 = server.example.com 
+
+EOF
+
+    In the [ req_distinguished_name ] section, enter information about your organization. 
+    Set the certificate’s Common Name CN to match the fully qualified domain name (FQDN) of your Server. To confirm a FQDN, on that Server, enter the hostname -f command. This is required to ensure that the katello-certs-check command validates the certificate correctly. 
+
+    Set the Subject Alternative Name (SAN) DNS.1 to match the fully qualified domain name (FQDN) of your server. 
+
+Generate the Certificate Signing Request (CSR):
+
+# openssl req -new -key /root/cert/cert_key.pem -config /root/cert/openssl.cnf -out /root/cert/cert_csr.pem 
+
+   
