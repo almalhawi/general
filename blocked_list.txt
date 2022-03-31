@@ -27,8 +27,8 @@ ff02::3 ip6-allhosts
 # 0.0.0.0 example.com
 
 # Custom host records are listed here.
-0.0.0.0 facebook.com
-#0.0.0.0 linkedin.com
-0.0.0.0 omardev.net
-0.0.0.0 blog.omardev.net
+facebook.com
+#linkedin.com
+#omardev.net
+#blog.omardev.net
 # End of custom host records.
