@@ -1,0 +1,7 @@
+cat << EOF > ~/.bashrc
+source /usr/share/git-core/contrib/completion/git-prompt.sh
+
+export GIT_PS1_SHOWDIRTY_STATE=true
+export GIT_PS1_SHOWUNTRACKEDFILES=true
+export PS1='[\u@\h \W$(declare -F __git_ps1 &>/dev/null && __git_ps1 " (%s)")]\$ '
+EOF
