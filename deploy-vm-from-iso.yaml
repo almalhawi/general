@@ -1,0 +1,88 @@
+---
+- name: Deploy RHEL/Debian ISO to VMware
+hosts: localhost
+gather_facts: no
+vars:
+  vmparams:
+    vcenter_host: "{{ vcenter_host }}"
+    name: "{{ vm_name }}"
+    iso_datastore: "{{ iso_datastore }}"
+    cluster: "{{ cluster }}"
+    os: "RHEL/Debian"
+    os_iso: "{{ os_iso }}"
+  network_params:
+    ip_address: "{{ ip_address }}"
+    netmask: "{{ netmask }}"
+    gateway: "{{ gateway }}"
+    vm_network: "{{ vm_network }}"
+  default_partitions:
+  - mount: "/var"
+    size: "{{ var_size | default(5) }}"
+  - mount: "/tmp"
+    size: "{{ tmp_size | default(5) }}"
+  additional_disks: "{{ additional_disks | default(\[\]) }}" # Example: \[{"mount": "/data1", "size": "20"}, {"mount":"/data2", "size": "30"}\]
+tasks:
+  - name: Deploy VM from ISO
+    community.vmware.vmware_guest:
+      hostname: "{{ vmparams.vcenter_host }}" 
+      username: "{{ vcenter_username }}"
+      password: "{{ vcenter_password }}"
+      validate_certs: false
+      name: "{{ vmparams.name }}"
+      state: poweredon
+      guest_id: "rhel7_64Guest" # Adjust for RHEL/Debian version
+      iso:
+        datastore: "{{ vmparams.iso_datastore }}"
+      path: "{{ vmparams.os_iso }}"
+      networks:
+        - name: "{{ network_params.vm_network }}"
+          ip: "{{ network_params.ip_address }}"
+          netmask: "{{ network_params.netmask }}"
+          gateway: "{{ network_params.gateway }}"
+      hardware:
+        memory_mb: "{{ memory_mb }}"
+        num_cpus: "{{ num_cpus }}"
+        scsi:
+          - type: "paravirtual"
+            disks:
+            - size_gb: "{{ primary_disk_size }}"
+              type: "thin"
+              datastore: "{{ vmparams.iso_datastore }}"
+            - name: "Default Partitions"
+              size_gb: "{{ item.size }}" 
+              datastore: "{{ vmparams.iso_datastore }}"
+              type: "thin"
+        mount: "{{ item.mount }}"
+        with_items: "{{ default_partitions }}"
+        - name: "Additional Disks"
+          size_gb: "{{ item.size }}"
+          datastore: "{{ vmparams.iso_datastore }}"
+          type: "thin"
+          mount: "{{ item.mount }}"
+          with_items: "{{ additional_disks }}"
+       - name: Configure partitions and mount points
+         block:
+        - name: Create LVM volume group for each disk
+          lvg:
+            vg: "vg_{{ item.mount.split('/')\[-1\] }}"
+            pvs: "/dev/sd{{ loop.index }}"
+          loop: "{{ default_partitions + additional_disks }}"
+        - name: Create logical volume and format
+          lvol:
+            vg: "vg_{{ item.mount.split('/')\[-1\] }}"
+            lv: "lv_{{ item.mount.split('/')\[-1\] }}"
+            size: "{{ item.size }}"
+            filesystem: ext4
+            loop: "{{ default_partitions + additional_disks }}"
+        - name: Update /etc/fstab
+          lineinfile:
+            path: /etc/fstab
+            line: "/dev/vg_{{ item.mount.split('/')\[-1\] }}/lv_{{ item.mount.split('/')\[-1\] }} {{ item.mount }} ext4 defaults 0 2"
+            loop: "{{ default_partitions + additional_disks }}"
+        - name: Mount partitions
+          mount:
+            path: "{{ item.mount }}"
+            src: "/dev/vg_{{ item.mount.split('/')\[-1\] }}/lv_{{ item.mount.split('/')\[-1\] }}"
+            fstype: ext4
+          state: mounted
+          loop: "{{ default_partitions + additional_disks }}"
