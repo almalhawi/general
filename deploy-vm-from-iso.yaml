@@ -52,7 +52,7 @@
         disk:
         - size_gb: "40"
           type: "thin"
-          datastore: "{{ vmparams.iso_datastore }}"
+          datastore: "Datastore-truenas"
                   #            - name: "Default Partitions"
                   #              size_gb: "{{ item.size }}"
                   #              datastore: "{{ vmparams.iso_datastore }}"
