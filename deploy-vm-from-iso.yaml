@@ -42,7 +42,7 @@
           memory_mb: "4096"
           num_cpus: "2"
           scsi: "paravirtual"
-          disks:
+          disk:
           - size_gb: "40"
             type: "thin"
             datastore: "{{ vmparams.iso_datastore }}"
