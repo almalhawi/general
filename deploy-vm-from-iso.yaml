@@ -1,5 +1,6 @@
 ---
 - name: Deploy RHEL/Debian ISO to VMware
+  hosts: localhost
   gather_facts: no
   vars:
     vmparams:
