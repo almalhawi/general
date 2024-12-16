@@ -29,6 +29,7 @@
         validate_certs: false
         cluster: cluster
         datacenter: HomeDC
+        datastore: "{{ vmparams.iso_datastore }}"
         folder: "/HomeDC/vm/AAP"
         name: "{{ vmparams.name }}"
         state: poweredon
