@@ -6,10 +6,10 @@
     vmparams:
       vcenter_host: "vcenter.home.ins"
       name: "test_vm"
-      iso_datastore: "/HomeDC/datastore/Datastore-esxi-01"
+      iso_datastore: "/HomeDC/datastore/Datastore-truenas"
       cluster: "cluster"
       os: "RHEL"
-      os_iso: ""
+      os_iso: "rhel-9.5.iso"
     network_params:
       ip_address: "10.0.200.200"
       netmask: "255.255.255.0"
