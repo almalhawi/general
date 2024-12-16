@@ -27,6 +27,7 @@
        # username: "{{ VMWARE_USER }}"
        # password: "{{ VMWARE_PASSWORD }}"
         validate_certs: false
+        cluster: cluster
         folder: "/HomeDC/vm/AAP"
         name: "{{ vmparams.name }}"
         state: poweredon
