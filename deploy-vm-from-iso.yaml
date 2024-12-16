@@ -42,10 +42,10 @@
           memory_mb: "4096"
           num_cpus: "2"
           scsi: "paravirtual"
-          disk:
-          - size_gb: "40"
-            type: "thin"
-            datastore: "{{ vmparams.iso_datastore }}"
+        disk:
+        - size_gb: "40"
+          type: "thin"
+          datastore: "{{ vmparams.iso_datastore }}"
                   #            - name: "Default Partitions"
                   #              size_gb: "{{ item.size }}"
                   #              datastore: "{{ vmparams.iso_datastore }}"
