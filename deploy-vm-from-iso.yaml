@@ -30,7 +30,7 @@
         folder: "/HomeDC/vm/AAP"
         name: "{{ vmparams.name }}"
         state: poweredon
-        guest_id: "rhel9_64Guest" # Adjust for RHEL/Debian version
+        guest_id: "rhel9_64Guest" 
         cdrom:
           - controller_number: 0
             unit_number: 0
