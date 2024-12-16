@@ -41,12 +41,11 @@
         hardware:
           memory_mb: "4096"
           num_cpus: "2"
-          scsi:
-            - type: "paravirtual"
-              disks:
-                - size_gb: "40"
-                  type: "thin"
-                  datastore: "{{ vmparams.iso_datastore }}"
+          scsi: "paravirtual"
+          disks:
+          - size_gb: "40"
+            type: "thin"
+            datastore: "{{ vmparams.iso_datastore }}"
                   #            - name: "Default Partitions"
                   #              size_gb: "{{ item.size }}"
                   #              datastore: "{{ vmparams.iso_datastore }}"
