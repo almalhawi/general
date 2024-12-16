@@ -1,7 +1,7 @@
 ---
 - name: Deploy RHEL/Debian ISO to VMware
   hosts: localhost
-  gather_facts: no
+  gather_facts: false
   vars:
     vmparams:
       vcenter_host: "vcenter.home.ins"
@@ -16,14 +16,14 @@
       gateway: "10.0.200.254"
       vm_network: "SharedServices.200"
     default_partitions:
-     - mount: "/var"
-       size: "{{ var_size | default(5) }}"
-     - mount: "/tmp"
-       size: "{{ tmp_size | default(5) }}"
-    tasks:
+      - mount: "/var"
+        size: "{{ var_size | default(5) }}"
+      - mount: "/tmp"
+        size: "{{ tmp_size | default(5) }}"
+  tasks:
     - name: Deploy VM from ISO
       community.vmware.vmware_guest:
-        hostname: "{{ vmparams.vcenter_host }}" 
+        hostname: "{{ vmparams.vcenter_host }}"
         username: "{{ vcenter_username }}"
         password: "{{ vcenter_password }}"
         validate_certs: false
@@ -44,11 +44,11 @@
           scsi:
             - type: "paravirtual"
               disks:
-              - size_gb: "40"
-                type: "thin"
-                datastore: "{{ vmparams.iso_datastore }}"
+                - size_gb: "40"
+                  type: "thin"
+                  datastore: "{{ vmparams.iso_datastore }}"
                   #            - name: "Default Partitions"
-                  #              size_gb: "{{ item.size }}" 
+                  #              size_gb: "{{ item.size }}"
                   #              datastore: "{{ vmparams.iso_datastore }}"
                   #              type: "thin"
                   #        mount: "{{ item.mount }}"
