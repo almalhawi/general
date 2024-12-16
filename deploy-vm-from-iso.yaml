@@ -39,7 +39,7 @@
             unit_number: 0
             state: present
             type: iso
-            iso_path: "{{ vmparams.iso_datastore }}/{{ vmparams.os_iso }}"
+            iso_path: "[{{ vmparams.iso_datastore }}]/ISOs/{{ vmparams.os_iso }}"
         networks:
           - name: "{{ network_params.vm_network }}"
             ip: "{{ network_params.ip_address }}"
