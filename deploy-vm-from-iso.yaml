@@ -6,7 +6,7 @@
     vmparams:
       vcenter_host: "vcenter.home.ins"
       name: "test_vm"
-      iso_datastore: "/HomeDC/datastore/Datastore-truenas"
+      iso_datastore: "Datastore-truenas"
       cluster: "cluster"
       os: "RHEL"
       os_iso: "rhel-9.5.iso"
