@@ -32,7 +32,7 @@
         guest_id: "rhel9_64Guest" # Adjust for RHEL/Debian version
         iso:
           datastore: "{{ vmparams.iso_datastore }}"
-          path: "{{ iso_datastore }}/{{ vmparams.os_iso }}"
+          path: "{{ vmparams.iso_datastore }}/{{ vmparams.os_iso }}"
         networks:
           - name: "{{ network_params.vm_network }}"
             ip: "{{ network_params.ip_address }}"
