@@ -36,13 +36,13 @@
         memory_mb: "4096"
       networks:
         - name: "SharedServices.200" 
-          type: static
-          ip: "10.0.200.90"
-          netmask: "255.255.255.0"
-          gateway: "10.0.200.254"
-          dns_servers: "10.0.0.4"
-          wait_for_ip_address: true
-          wait_for_ip_address_timeout: 300
+          type: dhcp
+      #    ip: "10.0.200.90"
+      #    netmask: "255.255.255.0"
+      #    gateway: "10.0.200.254"
+      #    dns_servers: "10.0.0.4"
+      #    wait_for_ip_address: true
+      #    wait_for_ip_address_timeout: 300
           connected: true
           start_connected: true
       customization:
