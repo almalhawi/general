@@ -50,7 +50,7 @@
 
   - name: debug
     debug:
-      msg: "Msg: {{ vm_info }}"
+      msg: "Msg: {{ vm_info.hw_name }}"
 
   - name: Connect Network to VM
     community.vmware.vmware_guest_network:
