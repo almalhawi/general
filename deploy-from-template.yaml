@@ -1,0 +1,69 @@
+---
+- name: Create a VM from a template
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  vars:
+    vcenter_host: "https://vcenter.home.ins"
+    vcenter_user: '{{ lookup("env", "VMWARE_USER") }}'
+    vcenter_pass: '{{ lookup("env", "VMWARE_PASSWORD") }}'
+
+  tasks:
+  - name: Create Windows VM from Template
+    community.vmware.vmware_guest:
+      hostname: "{{ vcenter_host }}"
+      username: "{{ vcenter_user }}"
+      password: "{{ vcenter_pass }}"
+      validate_certs: false
+      name: "test_vm_from_aap"
+      annotation: " Created by Ansible "
+      template: "RHEL9.2_Template"
+      cluster: "cluster"
+      datacenter: "HomeDC"
+      folder: "/HomeDC/vm/AAP"
+      state: poweredon
+      disk:
+      - size_gb: "20"
+        type: thin
+        datastore: "Datastore-truenas"
+      - size_gb: "10"
+        type: thin
+        datastore: "Datastore-truenas"
+      hardware:
+        num_cpus: "4"
+        memory_mb: "4096"
+      networks:
+      - name: "SharedServices.200" #TODO:
+        type: static
+        ip: "10.0.200.90"
+        netmask: "255.255.255.0"
+        gateway: "10.0.200.254"
+        domain: "home.ins"
+        dns_servers: "10.0.0.4"
+        start_connected: True
+      wait_for_ip_address: True
+     # customization:
+     #   timezone: 150
+     #   joindomain: "{{ vmparams['win_domain'] }}"
+     #   domainadmin: "{{ ADUSERNAME }}"
+     #   domainadminpassword: "{{ ADPASSWORD }}"
+     # wait_for_customization: yes
+    delegate_to: localhost
+ 
+#  - name: Add the deployed hosts to AAP
+#    ansible.controller.host:
+#      controller_host: aap-con-mv3.als.local
+#      validate_certs: no
+#      controller_oauthtoken: "{{ aap_token }}"
+#      name: "{{ vmparams['name'] }}"
+#      inventory: "Deployed by AAP"
+#      state: present
+#      enabled: true
+#      variables: # TODO: Make them real variables based on VM inputs
+#        Criticality: "No" #Always No from our side
+#        OS_Platform: "{{ os.split(' ')[0] }}"
+#        Owner: "{{ vm_owner }}"
+#        Notes: "{{ server_role }}"
+#        added_to_d42: "no"
+# 
+# 
