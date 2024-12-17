@@ -33,8 +33,9 @@
       hardware:
         num_cpus: "4"
         memory_mb: "4096"
+
       networks:
-        - name: "SharedServices.200" #TODO:
+        - name: "SharedServices.200" 
           type: static
           ip: "10.0.200.90"
           netmask: "255.255.255.0"
@@ -51,7 +52,7 @@
     community.vmware.vmware_guest_network:
       datacenter: "HomeDC"
       name: "{{ vmname }}"
-      network_name: SharedServices.200
+      network_name: "SharedServices.200"
       state: present
      
 #  - name: Add the deployed hosts to AAP
