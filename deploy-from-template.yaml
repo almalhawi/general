@@ -51,7 +51,7 @@
   - name: Connect Network to VM
     community.vmware.vmware_guest_network:
       datacenter: "HomeDC"
-      name: "{{ vm_info['hw_name']  }}"
+      name: "{{ vm_info.hw_name }}"
       network_name: "SharedServices.200"
       state: present
       connected: true
