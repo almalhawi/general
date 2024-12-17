@@ -47,12 +47,10 @@
         wait_for_ip_address_timeout: 300
         device_type: vmxnet3
       wait_for_ip_address: True
-     # customization:
-     #   timezone: 150
-     #   joindomain: "{{ vmparams['win_domain'] }}"
-     #   domainadmin: "{{ ADUSERNAME }}"
-     #   domainadminpassword: "{{ ADPASSWORD }}"
-     # wait_for_customization: yes
+      customization:
+        timezone: 150
+        domain: "home.ins"
+      wait_for_customization: yes
     delegate_to: localhost
  
 #  - name: Add the deployed hosts to AAP
