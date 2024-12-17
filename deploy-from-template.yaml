@@ -33,7 +33,6 @@
       hardware:
         num_cpus: "4"
         memory_mb: "4096"
-
       networks:
         - name: "SharedServices.200" 
           type: static
@@ -54,6 +53,7 @@
       name: "{{ vmname }}"
       network_name: "SharedServices.200"
       state: present
+      connected: true
      
 #  - name: Add the deployed hosts to AAP
 #    ansible.controller.host:
