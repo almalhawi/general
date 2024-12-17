@@ -37,12 +37,12 @@
       networks:
         - name: "SharedServices.200" 
           type: dhcp
-      #    ip: "10.0.200.90"
-      #    netmask: "255.255.255.0"
-      #    gateway: "10.0.200.254"
-      #    dns_servers: "10.0.0.4"
-      #    wait_for_ip_address: true
-      #    wait_for_ip_address_timeout: 300
+          ip: "10.0.200.90"
+          netmask: "255.255.255.0"
+          gateway: "10.0.200.254"
+          dns_servers: "10.0.0.4"
+          wait_for_ip_address: true
+          wait_for_ip_address_timeout: 300
           connected: true
           start_connected: true
       customization:
@@ -52,13 +52,13 @@
       wait_for_customization_timeout: 300
     delegate_to: localhost
 
-  - name: Connect Network to VM
-    community.vmware.vmware_guest_network:
-      datacenter: "HomeDC"
-      name: "{{ cvmname }}"
-      network_name: "SharedServices.200"
-      state: present
-      connected: true
+#  - name: Connect Network to VM
+#    community.vmware.vmware_guest_network:
+#      datacenter: "HomeDC"
+#      name: "{{ cvmname }}"
+#      network_name: "SharedServices.200"
+#      state: present
+#      connected: true
      
 #  - name: Add the deployed hosts to AAP
 #    ansible.controller.host:
