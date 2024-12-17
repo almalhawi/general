@@ -47,13 +47,13 @@
         domain: "home.ins"
     delegate_to: localhost
 
-  - name: Connect Network to VM
-    community.vmware.vmware_guest_network:
-      datacenter: "HomeDC"
-      name: "{{ vmname }}"
-      network_name: "SharedServices.200"
-      state: present
-      connected: true
+#  - name: Connect Network to VM
+#    community.vmware.vmware_guest_network:
+#      datacenter: "HomeDC"
+#      name: "{{ vmname }}"
+#      network_name: "SharedServices.200"
+#      state: present
+#      connected: true
      
 #  - name: Add the deployed hosts to AAP
 #    ansible.controller.host:
