@@ -43,6 +43,8 @@
           dns_servers: "10.0.0.4"
           wait_for_ip_address: true
           wait_for_ip_address_timeout: 300
+          connected: true
+          start_connected: true
       customization:
         dns_servers: "10.0.0.4"
         domain: "home.ins"
