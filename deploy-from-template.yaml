@@ -49,7 +49,7 @@
         dns_servers: "10.0.0.4"
         domain: "home.ins"
         wait_for_customization: true
-        wait_for_customization_timeout: 300
+      wait_for_customization_timeout: 300
     delegate_to: localhost
 
   - name: Connect Network to VM
