@@ -24,7 +24,7 @@
       folder: "/HomeDC/vm/AAP"
       state: poweredon
       disk:
-      - size_gb: "20"
+      - size_gb: "50"
         type: thin
         datastore: "Datastore-truenas"
       - size_gb: "10"
