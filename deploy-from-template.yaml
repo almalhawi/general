@@ -47,7 +47,7 @@
         domain: "home.ins"
     delegate_to: localhost
     register: vm_info
-  - set_fact: current_vm_name=vm_info.hw_name 
+  - set_fact: current_vm_name={{ vm_info.hw_name }}
 
   - name: debug
     debug:
