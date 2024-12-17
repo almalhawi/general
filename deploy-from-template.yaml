@@ -45,7 +45,7 @@
           wait_for_ip_address: true
           wait_for_ip_address_timeout: 300
       customization:
-          dns_servers: "10.0.0.4"
+        dns_servers: "10.0.0.4"
         domain: "home.ins"
       wait_for_customization: yes
     delegate_to: localhost
