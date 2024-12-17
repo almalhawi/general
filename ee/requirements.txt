@@ -1,4 +1,5 @@
 pyvmomi
+petname
 requests
 vmware-vcenter
 vmware-vapi-common-client

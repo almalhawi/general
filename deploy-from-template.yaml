@@ -16,7 +16,7 @@
 #      password: "{{ vcenter_pass }}"
 #     vcenter_host: "{{ lookup("env", "VMWARE_HOST") }}"
       validate_certs: false
-      name: "test_vm_from_aap"
+      name: "{{ lookup('community.general.random_pet', words=3) }}"
       annotation: " Created by Ansible "
       template: "RHEL9.2_Template"
       cluster: "cluster"
