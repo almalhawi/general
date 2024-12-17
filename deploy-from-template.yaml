@@ -11,9 +11,10 @@
   tasks:
   - name: Create Windows VM from Template
     community.vmware.vmware_guest:
-      hostname: "{{ vcenter_host }}"
-      username: "{{ vcenter_user }}"
-      password: "{{ vcenter_pass }}"
+#      hostname: "{{ vcenter_host }}"
+#      username: "{{ vcenter_user }}"
+#      password: "{{ vcenter_pass }}"
+#     vcenter_host: "{{ lookup("env", "VMWARE_HOST") }}"
       validate_certs: false
       name: "test_vm_from_aap"
       annotation: " Created by Ansible "
