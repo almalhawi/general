@@ -7,7 +7,7 @@
     vcenter_host: "https://vcenter.home.ins"
     vcenter_user: '{{ lookup("env", "VMWARE_USER") }}'
     vcenter_pass: '{{ lookup("env", "VMWARE_PASSWORD") }}'
-
+    vmname: "{{ lookup('community.general.random_pet', words=3) }}"
   tasks:
   - name: Create Windows VM from Template
     community.vmware.vmware_guest:
@@ -16,7 +16,7 @@
 #      password: "{{ vcenter_pass }}"
 #     vcenter_host: "{{ lookup("env", "VMWARE_HOST") }}"
       validate_certs: false
-      name: "{{ lookup('community.general.random_pet', words=3) }}"
+      name: "{{ vmname }}" 
       annotation: " Created by Ansible "
       template: "RHEL9.2_Template"
       cluster: "cluster"
@@ -40,8 +40,6 @@
           netmask: "255.255.255.0"
           gateway: "10.0.200.254"
           dns_servers: "10.0.0.4"
-          start_connected: True
-          connected: True
           wait_for_ip_address: true
           wait_for_ip_address_timeout: 300
       customization:
@@ -49,7 +47,14 @@
         domain: "home.ins"
       wait_for_customization: yes
     delegate_to: localhost
- 
+
+  - name: Connect Network to VM
+    community.vmware.vmware_guest_network:
+      datacenter: "{{ datacenter_name }}"
+      name: "{{ vmname }}"
+      network_name: SharedServices.200
+      state: present
+     
 #  - name: Add the deployed hosts to AAP
 #    ansible.controller.host:
 #      controller_host: aap-con-mv3.als.local
