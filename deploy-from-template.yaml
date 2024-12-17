@@ -7,8 +7,7 @@
     vcenter_host: "https://vcenter.home.ins"
     vcenter_user: '{{ lookup("env", "VMWARE_USER") }}'
     vcenter_pass: '{{ lookup("env", "VMWARE_PASSWORD") }}'
-    vmname: "{{ lookup('community.general.random_pet', words=3) }}"
-    cvmname: "test"
+    cvmname: "{{ lookup('community.general.random_pet', words=3) }}"
   tasks:
   - name: Create Windows VM from Template
     community.vmware.vmware_guest:
