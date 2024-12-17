@@ -45,7 +45,6 @@
       customization:
         dns_servers: "10.0.0.4"
         domain: "home.ins"
-      wait_for_customization: yes
     delegate_to: localhost
 
   - name: Connect Network to VM
