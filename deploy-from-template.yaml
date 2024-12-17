@@ -8,6 +8,7 @@
     vcenter_user: '{{ lookup("env", "VMWARE_USER") }}'
     vcenter_pass: '{{ lookup("env", "VMWARE_PASSWORD") }}'
     vmname: "{{ lookup('community.general.random_pet', words=3) }}"
+    cvmname: "test"
   tasks:
   - name: Create Windows VM from Template
     community.vmware.vmware_guest:
@@ -16,7 +17,7 @@
 #      password: "{{ vcenter_pass }}"
 #     vcenter_host: "{{ lookup("env", "VMWARE_HOST") }}"
       validate_certs: false
-      name: "{{ vmname }}" 
+      name: "{{ cvmname }}" 
       annotation: " Created by Ansible "
       template: "RHEL9.2_Template"
       cluster: "cluster"
@@ -46,17 +47,11 @@
         dns_servers: "10.0.0.4"
         domain: "home.ins"
     delegate_to: localhost
-    register: vm_info
-  - set_fact: current_vm_name={{ vm_info.hw_name }}
-
-  - name: debug
-    debug:
-      msg: "Msg: {{ current_vm_name }}"
 
   - name: Connect Network to VM
     community.vmware.vmware_guest_network:
       datacenter: "HomeDC"
-      name: "{{ current_vm_name }}"
+      name: "{{ cvmname }}"
       network_name: "SharedServices.200"
       state: present
       connected: true
