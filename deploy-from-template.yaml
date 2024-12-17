@@ -49,7 +49,7 @@
 
   - name: Connect Network to VM
     community.vmware.vmware_guest_network:
-      datacenter: "{{ datacenter_name }}"
+      datacenter: "HomeDC"
       name: "{{ vmname }}"
       network_name: SharedServices.200
       state: present
