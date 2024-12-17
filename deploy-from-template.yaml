@@ -46,11 +46,12 @@
         dns_servers: "10.0.0.4"
         domain: "home.ins"
     delegate_to: localhost
+    register: vm_info
 
   - name: Connect Network to VM
     community.vmware.vmware_guest_network:
       datacenter: "HomeDC"
-      name: "{{ vmname }}"
+      name: "{{ vm_info['hw_name']  }}"
       network_name: "SharedServices.200"
       state: present
       connected: true
