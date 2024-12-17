@@ -48,6 +48,10 @@
     delegate_to: localhost
     register: vm_info
 
+   - name: debug
+     debug:
+       msg: "{{ vm_info }}"
+
   - name: Connect Network to VM
     community.vmware.vmware_guest_network:
       datacenter: "HomeDC"
