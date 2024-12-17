@@ -44,6 +44,7 @@
         start_connected: True
         connected: True
         wait_for_ip_address: true
+        wait_for_ip_address_timeout: 300
         device_type: vmxnet3
       wait_for_ip_address: True
      # customization:
