@@ -23,9 +23,9 @@
       state: poweredon
       disk:
       - type: thin
-        size_gb: "{{ DISK_SIZES[item] }}"
+        size_gb: "{{ item }}"
         datastore: "Datastore-truenas"
-      loop: "{{ DISK_SIZES }}"
+      loop: "{{ _disks }}"
       hardware:
         num_cpus: "4"
         memory_mb: "4096"
