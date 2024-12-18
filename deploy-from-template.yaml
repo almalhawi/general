@@ -61,5 +61,5 @@
           size_gb: "{{ item }}"
           datastore: "Datastore-truenas"
           state: present
-      loop: "{{ _disks }}"
+    loop: "{{ _disks }}"
 
