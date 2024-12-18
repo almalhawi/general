@@ -26,9 +26,9 @@
         num_cpus: "4"
         memory_mb: "4096"
       disk:
-        - type: thin
-          size_gb: 50
-          datastore: "Datastore-truenas"
+      - type: thin
+        size_gb: 50
+        datastore: "Datastore-truenas"
       networks:
         - name: "{{ VMNET_NAME }}" 
           type: static
@@ -57,9 +57,9 @@
       datacenter: "{{ VMDC_NAME }}"
       folder: "/HomeDC/vm/AAP"
       disk:
-        - type: thin
-          size_gb: "{{ item }}"
-          datastore: "Datastore-truenas"
-          state: present
+      - type: thin
+        size_gb: "{{ item }}"
+        datastore: "Datastore-truenas"
+        state: present
     loop: "{{ _disks }}"
 
