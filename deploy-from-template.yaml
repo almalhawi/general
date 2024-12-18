@@ -58,7 +58,7 @@
       folder: "/HomeDC/vm/AAP"
       disk:
       - type: thin
-        size_gb: "{{ item }}"
+        size_gb: "{{ item }}gb"
         datastore: "Datastore-truenas"
         state: present
     loop: "{{ _disks }}"
