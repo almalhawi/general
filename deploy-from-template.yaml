@@ -44,11 +44,12 @@
           start_connected: true
       customization:
         dns_servers: 
-        - "{{ _dns[0] }}"
-        - "{{ _dns[1] }}"
+        - "{{ item }}"
         domain: "{{ VM_DOMAIN }}"
       wait_for_customization: true
       wait_for_customization_timeout: 300
+    loop: "{{ _dns }}"
+      
     delegate_to: localhost
 
   - name: Create Disks for VM
