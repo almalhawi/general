@@ -22,9 +22,9 @@
       validate_certs: False
       state: poweredon
       disk:
-      - type: thin
-        size_gb: "{{ item }}"
-        datastore: "Datastore-truenas"
+        - type: thin
+          size_gb: "{{ item }}"
+          datastore: "Datastore-truenas"
       loop: "{{ _disks }}"
       hardware:
         num_cpus: "4"
