@@ -56,6 +56,9 @@
       name: "{{ VMNAME }}"
     register: vm_info
 
+  - debug:
+      var: vm_info
+
   - name: Calculate next available unit_number
     set_fact:
       next_unit_number: "{{ vm_info.instance.hardware_devices.disks | length }}"
