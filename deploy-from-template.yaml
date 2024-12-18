@@ -9,6 +9,11 @@
     server_role: "Standard"
     server_srf: 12345
     vm_owner: Nasser
+    counter: 1
+    _disks:
+      - _size: "{{ disk_size }}"
+        _datastore: "Datastore-truenas"
+        _type: thin
   tasks:
   - name: Create Linux VM from Template
     community.vmware.vmware_guest:
@@ -20,15 +25,13 @@
       folder: "/HomeDC/vm/AAP"
       validate_certs: False
       state: poweredon
+      set_fact: 
+        counter: "{{ counter + 1 }}"
       disk:
       - type: thin
-        size_gb: 50
+        size_gb: "{{ DISK_SIZE }}_{{ counter }}"
         datastore: "Datastore-truenas"
-      - type: thin
-        size_gb: 30
-        datastore: "Datastore-truenas"
-      
-      
+      loop: "{{ counter }}" <=3
       hardware:
         num_cpus: "4"
         memory_mb: "4096"
