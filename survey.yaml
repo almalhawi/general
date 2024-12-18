@@ -1,10 +1,9 @@
 - name: Survey manipulation
   hosts: all
-  gather_facts: no
+  gather_facts: false
   vars:
     _disks: "{{ disks.split('\n') }}"
   tasks:
     - name: Show objects
-      debug:
+      ansible.builtin.debug:
         var: _disks
-         
