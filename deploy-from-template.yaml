@@ -37,14 +37,14 @@
           gateway: "{{ VM_GATEWAY }}"
           dns_servers: 
           - "{{ item }}"
-      wait_for_ip_address: true
-      wait_for_ip_address_timeout: 300
           connected: true
           start_connected: true
       customization:
         dns_servers: 
         - "{{ item }}"
         domain: "{{ VM_DOMAIN }}"
+      wait_for_ip_address: true
+      wait_for_ip_address_timeout: 300
       wait_for_customization: true
       wait_for_customization_timeout: 300
     loop: "{{ _dns }}"
