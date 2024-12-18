@@ -60,6 +60,7 @@
       - type: thin
         size_gb: "{{ item }}gb"
         datastore: "Datastore-truenas"
+        unit_number: 8
         state: present
     loop: "{{ _disks }}"
 
