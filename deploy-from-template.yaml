@@ -31,15 +31,15 @@
       - type: thin
         size_gb: 50
         datastore: "Datastore-truenas"
-#      - type: thin
-#        size_gb: "{{ DISK_SIZE_1 }}"
-#        datastore: "Datastore-truenas"
-#      - type: thin
-#        size_gb: "{{ DISK_SIZE_2 }}"
-#        datastore: "Datastore-truenas"
-#      - type: thin
-#        size_gb: "{{ DISK_SIZE_3 }}"
-#        datastore: "Datastore-truenas"
+      - type: thin
+        size_gb: "{{ DISK_SIZE_1 }}"
+        datastore: "Datastore-truenas"
+      - type: thin
+        size_gb: "{{ DISK_SIZE_2 }}"
+        datastore: "Datastore-truenas"
+      - type: thin
+        size_gb: "{{ DISK_SIZE_3 }}"
+        datastore: "Datastore-truenas"
       networks:
         - name: "{{ VMNET_NAME }}" 
           type: static
@@ -57,7 +57,7 @@
       wait_for_customization: true
       wait_for_customization_timeout: 300
     delegate_to: localhost
-#  - name: Add disks to virtual machine using UUID
+#  - name: Add disks to virtual machine using VM name
 #    vmware_guest_disk:
 #      name: "{{ VMNAME }}"
 #      disk:
