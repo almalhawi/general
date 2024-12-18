@@ -12,7 +12,7 @@
     host_disks:
       
     _disks: "{{ DISK_SIZES.split('\n') }}"
-    _dns: "{{ VM_DNS.split }}"
+    _dns: "{{ VM_DNS.split('\n') }}"
   tasks:
   - name: Create Linux VM from Template
     community.vmware.vmware_guest:
