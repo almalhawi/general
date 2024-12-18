@@ -36,8 +36,7 @@
           netmask: "{{ VM_SUBNET }}"
           gateway: "{{ VM_GATEWAY }}"
           dns_servers: 
-          - "{{ _dns[0] }}"
-          - "{{ _dns[1] }}"
+          - "{{ item }}"
           wait_for_ip_address: true
           wait_for_ip_address_timeout: 300
           connected: true
