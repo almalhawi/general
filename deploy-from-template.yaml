@@ -56,7 +56,7 @@
       name: "{{ VMNAME }}" 
       datacenter: "{{ VMDC_NAME }}"
       folder: "/HomeDC/vm/AAP"
-      disks:
+      disk:
         - type: thin
           size_gb: "{{ item }}"
           datastore: "Datastore-truenas"
