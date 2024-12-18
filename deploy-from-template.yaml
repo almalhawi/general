@@ -5,74 +5,48 @@
   gather_facts: no
   vars:
     vcenter_host: "https://vcenter.home.ins"
-    vcenter_user: '{{ lookup("env", "VMWARE_USER") }}'
-    vcenter_pass: '{{ lookup("env", "VMWARE_PASSWORD") }}'
     cvmname: "{{ lookup('community.general.random_pet', words=3) }}"
+    server_role: "Standard"
+    server_srf: 12345
+    vm_owner: Nasser
   tasks:
-  - name: Create Windows VM from Template
+  - name: Create Linux VM from Template
     community.vmware.vmware_guest:
-#      hostname: "{{ vcenter_host }}"
-#      username: "{{ vcenter_user }}"
-#      password: "{{ vcenter_pass }}"
-#     vcenter_host: "{{ lookup("env", "VMWARE_HOST") }}"
-      validate_certs: false
-      name: "{{ cvmname }}" 
-      annotation: " Created by Ansible "
-      template: "RHEL9.2_Template"
-      cluster: "cluster"
-      datacenter: "HomeDC"
+      name: "{{ VMNAME }}" 
+      annotation: "{{ server_role }} - Created by Ansible from {{ server_srf }} for {{ vm_owner }}"
+      template: "{{ VM_TEMPLATE }}"
+      cluster: "{{ VMCLUSTER_NAME }}"
+      datacenter: "{{ VMDC_NAME }}"
       folder: "/HomeDC/vm/AAP"
+      validate_certs: False
       state: poweredon
       disk:
-      - size_gb: "50"
-        type: thin
+      - type: thin
+        size_gb: 50
         datastore: "Datastore-truenas"
-      - size_gb: "10"
-        type: thin
+      - type: thin
+        size_gb: 30
         datastore: "Datastore-truenas"
+      
+      
       hardware:
         num_cpus: "4"
         memory_mb: "4096"
       networks:
-        - name: "SharedServices.200" 
+        - name: "{{ VMNET_NAME }}" 
           type: static
-          ip: "10.0.200.95"
-          netmask: "255.255.255.0"
-          gateway: "10.0.200.254"
-          dns_servers: "10.0.0.4"
+          ip: "{{ VM_IP }}"
+          netmask: "{{ VM_SUBNET }}"
+          gateway: "{{ VM_GATEWAY }}"
+          dns_servers: "{{ VM_DNS }} | list"
           wait_for_ip_address: true
           wait_for_ip_address_timeout: 300
           connected: true
           start_connected: true
       customization:
-        dns_servers: "10.0.0.4"
-        domain: "home.ins"
+        dns_servers: "{{ VM_DNS }} | list"
+        domain: "{{ VM_DOMAIN }}"
       wait_for_customization: true
       wait_for_customization_timeout: 300
     delegate_to: localhost
 
-#  - name: Connect Network to VM
-#    community.vmware.vmware_guest_network:
-#      datacenter: "HomeDC"
-#      name: "{{ cvmname }}"
-#      network_name: "SharedServices.200"
-#      state: present
-#      connected: true
-     
-#  - name: Add the deployed hosts to AAP
-#    ansible.controller.host:
-#      controller_host: aap-con-mv3.als.local
-#      validate_certs: no
-#      controller_oauthtoken: "{{ aap_token }}"
-#      name: "{{ vmparams['name'] }}"
-#      inventory: "Deployed by AAP"
-#      state: present
-#      enabled: true
-#      variables: # TODO: Make them real variables based on VM inputs
-#        Criticality: "No" #Always No from our side
-#        OS_Platform: "{{ os.split(' ')[0] }}"
-#        Owner: "{{ vm_owner }}"
-#        Notes: "{{ server_role }}"
-#        added_to_d42: "no"
-# 
-# 
