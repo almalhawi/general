@@ -4,7 +4,6 @@
    gather_facts: no
    vars:
     - _disks: "{{ disks.split('\n') }}"
-  tasks:
    tasks:
      - name: Show objects
        debug:
