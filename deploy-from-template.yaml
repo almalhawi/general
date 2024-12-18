@@ -51,6 +51,7 @@
       wait_for_customization: true
       wait_for_customization_timeout: 300
     delegate_to: localhost
+    
   - name: Add VM to AAP
     ansible.controller.host:
       controller_host: 10.0.0.119 
