@@ -57,17 +57,17 @@
       wait_for_customization: true
       wait_for_customization_timeout: 300
     delegate_to: localhost
-  - name: Add disks to virtual machine using UUID
-    vmware_guest_disk:
-      name: "{{ VMNAME }}"
-      disk:
-      - size_gb: "{{ item.0 }}"
-        type: thin
-        datastore: Datastore-truenas
-        state: present
-        scsi_controller: 
-        unit_number: "{{ item.1 }}"
-        scsi_type: 'paravirtual'
-      with_nested:
-        - "{{ _disks }}"
-        - [1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14]
+#  - name: Add disks to virtual machine using UUID
+#    vmware_guest_disk:
+#      name: "{{ VMNAME }}"
+#      disk:
+#      - size_gb: "{{ item.0 }}"
+#        type: thin
+#        datastore: Datastore-truenas
+#        state: present
+#        scsi_controller: 
+#        unit_number: "{{ item.1 }}"
+#        scsi_type: 'paravirtual'
+#      with_nested:
+#        - "{{ _disks }}"
+#        - [1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14]
