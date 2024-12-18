@@ -56,8 +56,9 @@
       name: "{{ VMNAME }}"
     register: vm_info
 
-  - debug:
-      var: vm_info
+  - name: debug
+    debug:
+      var: "{{ vm_info }}"
 
   - name: Calculate next available unit_number
     set_fact:
