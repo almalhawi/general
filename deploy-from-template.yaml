@@ -60,6 +60,7 @@
       - type: thin
         size_gb: "{{ item }}"
         datastore: "Datastore-truenas"
+        scsi_controller: 1
         unit_number: 8
         state: present
     loop: "{{ _disks }}"
