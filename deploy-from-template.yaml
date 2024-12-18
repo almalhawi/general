@@ -29,7 +29,7 @@
         memory_mb: "4096"
       disk:
       - type: thin
-        size_gb: 50
+        size_gb: 40
         datastore: "Datastore-truenas"
       - type: thin
         size_gb: "{{ DISK_SIZE_1 }}"
@@ -65,3 +65,18 @@
 #      with_nested:
 #        - "{{ _disks }}"
 #        - [1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14]
+   - name: Add VM to AAP
+     ansible.controller.host:
+       controller_host: 10.0.0.119 
+       validate_certs: no
+       name: "{{ VMNAME }}"
+       inventory: "Deployed by AAP"
+       state: present
+       enabled: true
+       variables: 
+         Criticality: "No" #Always No from our side
+         Owner: "{{ vm_owner }}"
+         Notes: "{{ server_role }}"
+     delegate_to: localhost
+ 
+ 
