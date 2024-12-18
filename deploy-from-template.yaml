@@ -46,18 +46,17 @@
           ip: "{{ VM_IP }}"
           netmask: "{{ VM_SUBNET }}"
           gateway: "{{ VM_GATEWAY }}"
-          dns_servers: "{{ item }}"
+          dns_servers: "{{ VM_DNS }}"
           connected: true
           start_connected: true
       customization:
-        dns_servers: "{{ item }}"
+        dns_servers: "{{ VM_DNS }}"
         domain: "{{ VM_DOMAIN }}"
       wait_for_ip_address: true
       wait_for_ip_address_timeout: 300
       wait_for_customization: true
       wait_for_customization_timeout: 300
     delegate_to: localhost
-    loop: "{{ _dns }}"
   - name: Add disks to virtual machine using UUID
     vmware_guest_disk:
       name: "{{ VMNAME }}"
