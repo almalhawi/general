@@ -1,12 +1,12 @@
 ---
- - name: Survey manipulation
-   hosts: all
-   gather_facts: no
-   vars:
+- name: Survey manipulation
+  hosts: all
+  gather_facts: no
+  vars:
     - _disks: "{{ disks.split('\n') }}"
-   tasks:
-     - name: Show objects
-       debug:
-         var: _disks
+  tasks:
+    - name: Show objects
+      debug:
+        var: _disks
          
         
