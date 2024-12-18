@@ -5,3 +5,12 @@ collections:
   - name: ansible.windows
   - name: community.vmware
   - name: ansible.posix
+  - name: awx.awx
+  - name: infra.aap_configuration
+  - name: infra.ah_configuration
+  - name: infra.aap_utilities
+  - name: kubernetes.core
+  - name: ansible.platform
+  - name: ansible.hub
+  - name: ansible.controller
+  - name: ansible.eda
