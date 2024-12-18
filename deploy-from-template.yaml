@@ -36,7 +36,7 @@
           netmask: "{{ VM_SUBNET }}"
           gateway: "{{ VM_GATEWAY }}"
           dns_servers: 
-            - "{{ item }}"
+          - "{{ item }}"
           loop: "{{ VM_DNS.split('\n') }}"
           wait_for_ip_address: true
           wait_for_ip_address_timeout: 300
@@ -44,7 +44,7 @@
           start_connected: true
       customization:
         dns_servers: 
-          - "{{ item }}"
+        - "{{ item }}"
         loop: "{{ VM_DNS.split('\n') }}"
         domain: "{{ VM_DOMAIN }}"
       wait_for_customization: true
