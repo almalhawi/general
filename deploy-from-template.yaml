@@ -2,7 +2,7 @@
 - name: Create a VM from a template
   hosts: localhost
   connection: local
-  gather_facts: no
+  gather_facts: yes
   vars:
     vcenter_host: "https://vcenter.home.ins"
     cvmname: "{{ lookup('community.general.random_pet', words=3) }}"
