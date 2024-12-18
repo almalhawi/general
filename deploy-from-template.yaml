@@ -48,9 +48,20 @@
       wait_for_customization: true
       wait_for_customization_timeout: 300
     loop: "{{ _dns }}"
-      
     delegate_to: localhost
+    register: vm_info
 
+  - name: Calculate next available unit_number
+    set_fact:
+      next_unit_number: "{{ vm_info.instance.hardware_devices.disks | length }}"
+      reserved_numbers: [7]  # Reserved unit numbers (e.g., for SCSI controllers)
+      available_unit_numbers: "{{ range(0, 15) | difference(reserved_numbers) }}"
+      next_unit_number: >-
+        {{
+          available_unit_numbers[
+            (vm_info.instance.hardware_devices.disks | length) % available_unit_numbers | length
+          ]
+        }}
   - name: Create Disks for VM
     community.vmware.vmware_guest_disk:
       name: "{{ VMNAME }}" 
@@ -61,7 +72,7 @@
         size_gb: "{{ item }}"
         datastore: "Datastore-truenas"
         scsi_controller: 1
-        unit_number: 8
+        unit_number: "{{ next_unit_number }}"
         state: present
     loop: "{{ _disks }}"
 
