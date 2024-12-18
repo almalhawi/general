@@ -49,6 +49,11 @@
       wait_for_customization_timeout: 300
     loop: "{{ _dns }}"
     delegate_to: localhost
+    
+  - name: Gather guest info
+    community.vmware.vmware_guest_info:
+      validate_certs: no
+      name: "{{ VMNAME }}"
     register: vm_info
 
   - name: Calculate next available unit_number
