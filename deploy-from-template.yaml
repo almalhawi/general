@@ -30,13 +30,13 @@
         size_gb: 50
         datastore: "Datastore-truenas"
       - type: thin
-        size: "{{ DISK_SIZE_1  }}"
+        size: "{{ DISK_SIZE_1 }}"
         datastore: "Datastore-truenas"
       - type: thin
-        size: "{{ DISK_SIZE_2  }}"
+        size: "{{ DISK_SIZE_2 }}"
         datastore: "Datastore-truenas"
       - type: thin
-        size: "{{ DISK_SIZE_3  }}"
+        size: "{{ DISK_SIZE_3 }}"
         datastore: "Datastore-truenas"
       networks:
         - name: "{{ VMNET_NAME }}" 
