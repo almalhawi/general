@@ -12,7 +12,7 @@
     host_disks:
       
     _disks: "{{ DISK_SIZES.split('\n') }}"
-    _dns: "{{ VM_DNS.split('\n') }}"
+    _dns: "{{ VM_DNS.split }}"
   tasks:
   - name: Create Linux VM from Template
     community.vmware.vmware_guest:
@@ -46,11 +46,13 @@
           ip: "{{ VM_IP }}"
           netmask: "{{ VM_SUBNET }}"
           gateway: "{{ VM_GATEWAY }}"
-          dns_servers: "{{ _dns }}"
+          dns_servers:
+          - "{{ _dns }}"
           connected: true
           start_connected: true
       customization:
-        dns_servers: "{{ _dns }}"
+        dns_servers: 
+        - "{{ _dns }}"
         domain: "{{ VM_DOMAIN }}"
       wait_for_ip_address: true
       wait_for_ip_address_timeout: 300
