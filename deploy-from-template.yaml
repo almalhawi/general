@@ -38,13 +38,13 @@
           ip: "{{ VM_IP }}"
           netmask: "{{ VM_SUBNET }}"
           gateway: "{{ VM_GATEWAY }}"
-          dns_servers: "{{ VM_DNS }} | list"
+          dns_servers: "{{ VM_DNS }}"
           wait_for_ip_address: true
           wait_for_ip_address_timeout: 300
           connected: true
           start_connected: true
       customization:
-        dns_servers: "{{ VM_DNS }} | list"
+        dns_servers: "{{ VM_DNS }}"
         domain: "{{ VM_DOMAIN }}"
       wait_for_customization: true
       wait_for_customization_timeout: 300
