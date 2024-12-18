@@ -9,7 +9,7 @@
     server_role: "Standard"
     server_srf: 12345
     vm_owner: Nasser
-    _disks: "{{ DISK_SIZES.split('\n') }}"
+    # _disks: "{{ DISK_SIZES.split('\n') }}"
     _dns: "{{ VM_DNS.split('\n') }}"
   tasks:
   - name: Create Linux VM from Template
@@ -29,6 +29,15 @@
       - type: thin
         size_gb: 50
         datastore: "Datastore-truenas"
+      - type: thin
+        size: "{{ DISK_SIZE_1  }}"
+        datastore: "Datastore-truenas"
+      - type: thin
+        size: "{{ DISK_SIZE_2  }}"
+        datastore: "Datastore-truenas"
+      - type: thin
+        size: "{{ DISK_SIZE_3  }}"
+        datastore: "Datastore-truenas"
       networks:
         - name: "{{ VMNET_NAME }}" 
           type: static
@@ -47,39 +56,3 @@
       wait_for_customization_timeout: 300
     delegate_to: localhost
     
-  - name: Gather guest info
-    community.vmware.vmware_guest_info:
-      validate_certs: no
-      name: "{{ VMNAME }}"
-    register: vm_info
-
-  - name: debug
-    debug:
-      var: "{{ vm_info }}"
-
-  - name: Calculate next available unit_number
-    set_fact:
-      next_unit_number: "{{ vm_info.instance.hardware_devices.disks | length }}"
-      reserved_numbers: [7]  # Reserved unit numbers (e.g., for SCSI controllers)
-      available_unit_numbers: "{{ range(0, 15) | difference(reserved_numbers) }}"
-      next_unit_number: >-
-        {{
-          available_unit_numbers[
-            (vm_info.instance.hardware_devices.disks | length) % available_unit_numbers | length
-          ]
-        }}
-
-  - name: Create Disks for VM
-    community.vmware.vmware_guest_disk:
-      name: "{{ VMNAME }}" 
-      datacenter: "{{ VMDC_NAME }}"
-      folder: "/HomeDC/vm/AAP"
-      disk:
-      - type: thin
-        size_gb: "{{ item }}"
-        datastore: "Datastore-truenas"
-        scsi_controller: 1
-        unit_number: "{{ next_unit_number }}"
-        state: present
-    loop: "{{ _disks }}"
-
