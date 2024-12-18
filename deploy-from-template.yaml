@@ -35,19 +35,16 @@
           ip: "{{ VM_IP }}"
           netmask: "{{ VM_SUBNET }}"
           gateway: "{{ VM_GATEWAY }}"
-          dns_servers: 
-          - "{{ item }}"
+          dns_servers: "{{ _dns }}"
           connected: true
           start_connected: true
       customization:
-        dns_servers: 
-        - "{{ item }}"
+        dns_servers: "{{ _dns }}"
         domain: "{{ VM_DOMAIN }}"
       wait_for_ip_address: true
       wait_for_ip_address_timeout: 300
       wait_for_customization: true
       wait_for_customization_timeout: 300
-    loop: "{{ _dns }}"
     delegate_to: localhost
     
   - name: Gather guest info
@@ -71,6 +68,7 @@
             (vm_info.instance.hardware_devices.disks | length) % available_unit_numbers | length
           ]
         }}
+
   - name: Create Disks for VM
     community.vmware.vmware_guest_disk:
       name: "{{ VMNAME }}" 
