@@ -1,13 +1,13 @@
 ---
 - name: Pre satellite disks
   hosts: all
-  become: yes
+  become: true
   tasks:
     - name: Create partition on additional disk
       community.general.parted:
         device: /dev/sdb
         number: 1
-        flags: [ lvm ]
+        flags: "[ lvm ]"
         part_end: "100%"
         state: present
 
@@ -16,7 +16,7 @@
         vg: "{{ VG_NAME }}"
         pvs: /dev/sdb1
     - name: Create a logical volume
-      lvol:
+      community.general.lvol:
         vg: "{{ VG_NAME }}"
         lv: "{{ LV_NAME }}"
         size: 100%FREE
@@ -24,14 +24,15 @@
     - name: Create mount point.
       ansible.builtin.file:
         path: "{{ DISK_MOUNTPOINT }}"
+        mode: '0755'
         state: directory
 
-    - name: format disks
+    - name: Format disks
       community.general.filesystem:
         fstype: xfs
         dev: "/dev/{{ VG_NAME }}/{{ LV_NAME }}"
 
-    - name: mount disks
+    - name: Mount disks
       ansible.posix.mount:
         path: "{{ DISK_MOUNTPOINT }}"
         src: "/dev/{{ VG_NAME }}/{{ LV_NAME }}"
