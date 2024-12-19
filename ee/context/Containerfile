@@ -50,6 +50,7 @@ ARG PKGMGR
 
 RUN $PYCMD -m pip install --no-cache-dir bindep pyyaml packaging
 ENV PKGMGR_OPTS="--nodocs --setopt=install_weak_deps=0 --setopt=rhocp-4.14-for-rhel-9-x86_64-rpms.enabled=true"
+RUN curl https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token -d grant_type=refresh_token -d \ client_id="cloud-services" -d \ refresh_token=\"{{ user_token }}\" --fail --silent --show-error --output /dev/null
 
 COPY --from=galaxy /usr/share/ansible /usr/share/ansible
 

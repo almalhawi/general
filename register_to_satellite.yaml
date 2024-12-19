@@ -9,12 +9,12 @@
     activation_key: "rhel8"
     _org_id: "HomeDC"
   tasks:
-    - name: Trust Corportate CA Certificate
-      copy:
-        src: "{{ certificate_path }}"
-        dest: /etc/pki/ca-trust/source/anchors/
-        owner: root
-        group: root
+#    - name: Trust Corportate CA Certificate
+#      copy:
+#        src: "{{ certificate_path }}"
+#        dest: /etc/pki/ca-trust/source/anchors/
+#        owner: root
+#        group: root
 
 #    - name: update trust store
 #      shell: /usr/bin/update-ca-trust
