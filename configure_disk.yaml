@@ -1,6 +1,6 @@
 ---
 - name: Pre satellite disks
-  hosts: all
+  hosts: "{{ VM_IP }}"
   become: true
   tasks:
     - name: Create partition on additional disk
