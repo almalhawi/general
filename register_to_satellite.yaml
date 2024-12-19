@@ -25,7 +25,7 @@
   - name: Install Katello Package
     dnf:
       name: "https://{{ satellite_url }}/pub/katello-ca-consumer-latest.noarch.rpm"
-      state: updated
+      state: latest
       disable_gpg_check: yes
       sslverify: false
       validate_certs: false
