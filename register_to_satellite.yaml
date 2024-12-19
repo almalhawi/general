@@ -25,6 +25,7 @@
       state: present
       disable_gpg_check: yes
       sslverify: false
+      validate_certs: false
 
   - name: Register to Satellite
     redhat_subscription:
