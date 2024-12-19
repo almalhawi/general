@@ -4,7 +4,7 @@
   become: yes
   hosts: all
   vars:
-    certificate_path: "/root/files/sat.pem"
+    #certificate_path: "/root/files/sat.pem"
     satellite_url: satellite.home.ins
     activation_key: "rhel8"
     org_id: "DC"
@@ -16,15 +16,16 @@
         owner: root
         group: root
 
-    - name: update trust store
-      shell: /usr/bin/update-ca-trust
+#    - name: update trust store
+#      shell: /usr/bin/update-ca-trust
 
-  - name: c
+  - name: Install Katello Package
     yum:
       name: "https://{{ satellite_url }}/pub/katello-ca-consumer-latest.noarch.rpm"
       state: present
       disable_gpg_check: yes
-  - name: sam
+
+  - name: Register to Satellite
     redhat_subscription:
       state: present
       server_hostname: "{{ satellite_url }}"
@@ -34,11 +35,22 @@
       activationkey: "rhel8"
       org_id: "DC"
       force_register: yes
-    register: result 
+    when: 
+      - ansible_facts['distribution'] == "RedHat" 
+      - ansible_facts['distribution_major_version'] == "8"
 
+  - name: Register to Satellite
+    redhat_subscription:
+      state: present
+      server_hostname: "{{ satellite_url }}"
+    # server_insecure: true
+    # username: "admin"
+    # password: "P@ssw0rd"
+      activationkey: "rhel8"
+      org_id: "DC"
+      force_register: yes
+    when: 
+      - ansible_facts['distribution'] == "RedHat" 
+      - ansible_facts['distribution_major_version'] == "9"
 
-    - name: Update all packages
-      yum:
-        name: '*'
-        state: latest
 
