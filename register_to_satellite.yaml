@@ -20,16 +20,17 @@
 #      shell: /usr/bin/update-ca-trust
 
   - name: Install Katello Package
-    yum:
+    dnf:
       name: "https://{{ satellite_url }}/pub/katello-ca-consumer-latest.noarch.rpm"
       state: present
       disable_gpg_check: yes
+      sslverify: false
 
   - name: Register to Satellite
     redhat_subscription:
       state: present
       server_hostname: "{{ satellite_url }}"
-    # server_insecure: true
+      server_insecure: true
     # username: "admin"
     # password: "P@ssw0rd"
       activationkey: "rhel8"
@@ -43,7 +44,7 @@
     redhat_subscription:
       state: present
       server_hostname: "{{ satellite_url }}"
-    # server_insecure: true
+      server_insecure: true
     # username: "admin"
     # password: "P@ssw0rd"
       activationkey: "rhel8"
