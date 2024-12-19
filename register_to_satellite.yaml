@@ -2,7 +2,7 @@
 - name: Configure hosts for ansible
   become_user: root
   become: yes
-  hosts: "{{ VM_IP }}"
+  hosts: all 
   vars:
     #certificate_path: "/root/files/sat.pem"
     satellite_url: satellite.home.ins
