@@ -21,6 +21,7 @@
 
   - name: Clean any resedul subscriptions
     shell: subscription-manager unregister && subscription-manager remove --all && subscription-manager clean
+    ignore_errors: true
     
   - name: Install Katello Package
     dnf:
