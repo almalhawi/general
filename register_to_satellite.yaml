@@ -7,7 +7,7 @@
     #certificate_path: "/root/files/sat.pem"
     satellite_url: satellite.home.ins
     activation_key: "rhel8"
-    org_id: "DC"
+    _org_id: "HomeDC"
   tasks:
     - name: Trust Corportate CA Certificate
       copy:
@@ -33,7 +33,7 @@
     # username: "admin"
     # password: "P@ssw0rd"
       activationkey: "rhel8"
-      org_id: "DC"
+      org_id: "{{ _org_id }}"
       force_register: yes
     when: 
       - ansible_facts['distribution'] == "RedHat" 
@@ -47,7 +47,7 @@
     # username: "admin"
     # password: "P@ssw0rd"
       activationkey: "rhel8"
-      org_id: "DC"
+      org_id: "{{ _ord_id }}"
       force_register: yes
     when: 
       - ansible_facts['distribution'] == "RedHat" 
