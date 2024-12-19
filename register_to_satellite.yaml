@@ -49,7 +49,7 @@
     # username: "admin"
     # password: "P@ssw0rd"
       activationkey: "rhel8"
-      org_id: "{{ _ord_id }}"
+      org_id: "{{ _org_id }}"
       force_register: yes
     when: 
       - ansible_facts['distribution'] == "RedHat" 
