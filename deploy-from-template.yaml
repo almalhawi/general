@@ -25,8 +25,8 @@
       validate_certs: False
       state: poweredon
       hardware:
-        num_cpus: "4"
-        memory_mb: "4096"
+        num_cpus: "{{ CPU_COUNT }}"
+        memory_mb: "{{ MEMORY_GB }}*1024"
       disk:
       - type: thin
         size_gb: 40
@@ -38,7 +38,7 @@
         - name: "{{ VMNET_NAME }}" 
           type: static
           ip: "{{ VM_IP }}"
-          netmask: "{{ VM_SUBNET }}"
+          netmask: "{{ VM_SUBNET_MASK }}"
           gateway: "{{ VM_GATEWAY }}"
           dns_servers: "{{ VM_DNS }}"
           connected: true
