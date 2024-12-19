@@ -26,7 +26,7 @@
       state: poweredon
       hardware:
         num_cpus: "{{ CPU_COUNT }}"
-        memory_mb: "{{ MEMORY_GB * 1024 | int }}"
+        memory_mb: "{{ MEMORY_GB | int * 1024 }}"
       disk:
       - type: thin
         size_gb: 40
