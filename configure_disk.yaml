@@ -1,0 +1,39 @@
+---
+- name: Pre satellite disks
+  hosts: all
+  become: yes
+  tasks:
+    - name: Create partition on additional disk
+      community.general.parted:
+        device: /dev/sdb
+        number: 1
+        flags: [ lvm ]
+        part_end: "100%"
+        state: present
+
+    - name: Create a volume group on top of /dev/sdb1
+      lvg:
+        vg: "{{ VG_NAME }}"
+        pvs: /dev/sdb1
+    - name: Create a logical volume
+      lvol:
+        vg: "{{ VG_NAME }}"
+        lv: "{{ LV_NAME }}"
+        size: 100%FREE
+
+    - name: Create mount point.
+      file:
+        path: "{{ DISK_MOUNTPOINT }}"
+        state: directory
+
+    - name: format disks
+      filesystem:
+        fstype: xfs
+        dev: "/dev/{{ VG_NAME }}/{{ LV_NAME }}"
+
+    - name: mount disks
+      mount:
+        path: "{{ DISK_MOUNTPOINT }}"
+        src: "/dev/{{ VG_NAME }}/{{ LV_NAME }}"
+        state: mounted
+        fstype: xfs
