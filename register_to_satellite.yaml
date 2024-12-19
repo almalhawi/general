@@ -20,7 +20,7 @@
 #      shell: /usr/bin/update-ca-trust
 
   - name: Clean any resedul subscriptions
-    shell: subscription-manager clean 
+    shell: subscription-manager unregister && subscription-manager remove --all && subscription-manager clean
     
   - name: Install Katello Package
     dnf:
