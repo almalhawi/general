@@ -21,6 +21,7 @@
 
   - name: Clean any resedul subscriptions
     shell: subscription-manager clean 
+    
   - name: Install Katello Package
     dnf:
       name: "https://{{ satellite_url }}/pub/katello-ca-consumer-latest.noarch.rpm"
@@ -34,11 +35,9 @@
       state: present
       server_hostname: "{{ satellite_url }}"
       server_insecure: true
-    # username: "admin"
-    # password: "P@ssw0rd"
       activationkey: "rhel8"
       org_id: "{{ _org_id }}"
-      force_register: yes
+      force_register: true
     when: 
       - ansible_facts['distribution'] == "RedHat" 
       - ansible_facts['distribution_major_version'] == "8"
@@ -48,11 +47,9 @@
       state: present
       server_hostname: "{{ satellite_url }}"
       server_insecure: true
-    # username: "admin"
-    # password: "P@ssw0rd"
       activationkey: "rhel8"
       org_id: "{{ _org_id }}"
-      force_register: yes
+      force_register: true
     when: 
       - ansible_facts['distribution'] == "RedHat" 
       - ansible_facts['distribution_major_version'] == "9"
