@@ -19,6 +19,8 @@
 #    - name: update trust store
 #      shell: /usr/bin/update-ca-trust
 
+  - name: Clean any resedul subscriptions
+    shell: subscription-manager clean 
   - name: Install Katello Package
     dnf:
       name: "https://{{ satellite_url }}/pub/katello-ca-consumer-latest.noarch.rpm"
