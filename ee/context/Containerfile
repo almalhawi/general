@@ -29,6 +29,10 @@ ARG ANSIBLE_GALAXY_CLI_COLLECTION_OPTS
 ARG ANSIBLE_GALAXY_CLI_ROLE_OPTS
 ARG PKGMGR
 
+ARG ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_TOKEN
+ENV ANSIBLE_GALAXY_SERVER_LIST=automation_hub
+ENV ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_URL=https://10.0.0.119/api/galaxy/content/rh-certified/
+ENV ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_AUTH_URL=https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
 RUN /output/scripts/check_galaxy
 COPY _build /build
 WORKDIR /build
@@ -50,7 +54,6 @@ ARG PKGMGR
 
 RUN $PYCMD -m pip install --no-cache-dir bindep pyyaml packaging
 ENV PKGMGR_OPTS="--nodocs --setopt=install_weak_deps=0 --setopt=rhocp-4.14-for-rhel-9-x86_64-rpms.enabled=true"
-RUN curl https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token -d grant_type=refresh_token -d \ client_id="cloud-services" -d \ refresh_token=\"{{ user_token }}\" --fail --silent --show-error --output /dev/null
 
 COPY --from=galaxy /usr/share/ansible /usr/share/ansible
 

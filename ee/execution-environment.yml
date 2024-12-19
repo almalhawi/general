@@ -6,6 +6,13 @@ dependencies:
 
 
 additional_build_steps:
+  prepend_galaxy:
+    # define a custom build arg env passthru- we still also have to pass
+    # `--build-arg ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_TOKEN` to get it to pick it up from the host env
+    - ARG ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_TOKEN
+    - ENV ANSIBLE_GALAXY_SERVER_LIST=automation_hub
+    - ENV ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_URL=https://10.0.0.119/api/galaxy/content/rh-certified/
+    - ENV ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_AUTH_URL=https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
   prepend_builder:
     - ENV PKGMGR_OPTS="--nodocs --setopt=install_weak_deps=0 --setopt=rhocp-4.14-for-rhel-9-x86_64-rpms.enabled=true"
   prepend_final:
@@ -17,3 +24,4 @@ options:
 images: 
   base_image:
     name: registry.redhat.io/ansible-automation-platform-24/ee-minimal-rhel9:latest
+
