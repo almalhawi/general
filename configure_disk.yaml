@@ -10,6 +10,7 @@
         flags: [ lvm ]
         part_end: "100%"
         state: present
+      
 
     - name: Create a volume group on top of /dev/sdb1
       community.general.lvg:
