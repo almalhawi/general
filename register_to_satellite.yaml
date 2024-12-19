@@ -7,7 +7,7 @@
     #certificate_path: "/root/files/sat.pem"
     satellite_url: satellite.home.ins
     activation_key: "rhel8"
-    _org_id: "HomeDC"
+    _org_id: "HomeOrg"
   tasks:
 #    - name: Trust Corportate CA Certificate
 #      copy:
